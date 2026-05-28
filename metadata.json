@@ -1,0 +1,6 @@
+{
+  "name": "QC Spotlight Drawing Manager",
+  "description": "Quản lý bản vẽ đo kích thước QC, zoom spotlight, tính dung sai và xuất báo cáo kết quả PDF chuẩn xác",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
