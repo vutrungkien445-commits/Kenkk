@@ -93,24 +93,44 @@ export default function App() {
   const [sidebarWidth, setSidebarWidth] = useState<number>(360);
   const [isResizingSidebar, setIsResizingSidebar] = useState<boolean>(false);
 
-  // --- KHỞI TẠO TẢI CHƯƠNG TRÌNH TỪ LOCALSTORAGE ---
+  // --- KHỞI TẠO TẢI CHƯƠNG TRÌNH TỪ FILE data.json (ƯU TIÊN) HOẶC LOCALSTORAGE ---
   useEffect(() => {
-    const localData = localStorage.getItem('qc_drawing_programs');
-    if (localData) {
+    const initData = async () => {
       try {
-        const parsed = JSON.parse(localData) as DrawingProgram[];
-        if (parsed.length > 0) {
-          setPrograms(parsed);
-          setCurrentProgId(parsed[0].id);
-        } else {
-          loadDefaultData();
+        // 1. Thử tải từ file data.json qua API server
+        const res = await fetch('/api/data');
+        if (res.ok) {
+          const parsed = await res.json() as DrawingProgram[];
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            setPrograms(parsed);
+            setCurrentProgId(parsed[0].id);
+            // Đồng bộ sang localStorage để backup
+            localStorage.setItem('qc_drawing_programs', JSON.stringify(parsed));
+            return;
+          }
         }
-      } catch (e) {
-        loadDefaultData();
+      } catch (_) {
+        // API không khả dụng, dùng fallback
       }
-    } else {
+
+      // 2. Fallback: Thử đọc từ localStorage
+      const localData = localStorage.getItem('qc_drawing_programs');
+      if (localData) {
+        try {
+          const parsed = JSON.parse(localData) as DrawingProgram[];
+          if (parsed.length > 0) {
+            setPrograms(parsed);
+            setCurrentProgId(parsed[0].id);
+            return;
+          }
+        } catch (_) {}
+      }
+
+      // 3. Fallback cuối: dùng dữ liệu mặc định
       loadDefaultData();
-    }
+    };
+
+    initData();
   }, []);
 
   const loadDefaultData = () => {
@@ -121,9 +141,19 @@ export default function App() {
     showToast('Tải dữ liệu chương trình mặc định thành công!', 'success');
   };
 
+  // Lưu dữ liệu: ghi vào file data.json qua API VÀ đồng thời backup localStorage
   const saveProgramsToLocal = (newPrograms: DrawingProgram[]) => {
     setPrograms(newPrograms);
+    // Backup localStorage
     localStorage.setItem('qc_drawing_programs', JSON.stringify(newPrograms));
+    // Ghi chính vào file data.json
+    fetch('/api/data', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(newPrograms, null, 2),
+    }).catch(() => {
+      // Nếu API lỗi thì chỉ dùng localStorage backup, không báo lỗi
+    });
   };
 
   // --- CHƯƠNG TRÌNH ĐO HIỆN TẠI ---
