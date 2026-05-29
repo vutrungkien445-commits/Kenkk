@@ -46,7 +46,7 @@ export default function App() {
 
   // --- TRẠNG THÁI CHỦ ĐỀ (THEME LIGHT/DARK) ---
   const [theme, setTheme] = useState<'dark' | 'light'>(() => {
-    return (localStorage.getItem('qc_theme') as 'dark' | 'light') || 'dark';
+    return (localStorage.getItem('qc_theme') as 'dark' | 'light') || 'light';
   });
 
   const toggleTheme = () => {
