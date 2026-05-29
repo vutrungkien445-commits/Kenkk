@@ -21,9 +21,12 @@ export default function ReportView({ program, run, onBack }: ReportViewProps) {
       
       {/* Thanh công cụ báo cáo */}
       <div className="w-full max-w-[210mm] bg-slate-800 border border-slate-700 rounded-2xl p-4 mb-6 flex flex-col sm:flex-row justify-between items-center gap-4 no-print shadow-xl">
-        <div>
+        <div className="flex-1">
           <h2 className="text-sm font-black text-white uppercase tracking-wider">Xem thử bản in Báo Cáo Đo Lường</h2>
           <p className="text-[11px] text-slate-400">Thiết kế căn chỉnh 100% khớp biểu mẫu nhà máy <b>Form VQC - 002 - 01</b></p>
+          <div className="text-[10px] text-blue-700 bg-blue-50/90 p-2 rounded-xl border border-blue-200 mt-1.5 font-medium leading-relaxed font-sans">
+            💡 <b>Hướng dẫn lưu PDF:</b> Sau khi bấm nút <b>In Bản Đo / Xuất PDF</b>, tại hộp thoại in của trình duyệt, bạn chọn máy in (Destination) là <b>Lưu dưới dạng PDF (Save as PDF)</b> rồi bấm nút <b>Lưu (Save)</b> để tự chọn vị trí lưu và đặt tên file PDF theo ý muốn trên máy tính của bạn.
+          </div>
         </div>
         <div className="flex items-center gap-2">
           <button 
@@ -47,71 +50,78 @@ export default function ReportView({ program, run, onBack }: ReportViewProps) {
       {/* VÙNG IN BAO PHỦ BẢNG (KÍCH THƯỚC CHUẨN A4 DỌC: 210mm x 297mm) */}
       <div className="print-area bg-white text-black p-4 md:p-8 w-full max-w-[210mm] border border-slate-300 min-h-[297mm] shadow-2xl relative text-[11px]">
         
-        {/* TIÊU ĐỀ BIỂU MẪU */}
-        <div className="grid grid-cols-12 border border-black mb-3">
+        {/* TIÊU ĐỀ BIỂU MẪU KHỚP HÌNH ẢNH */}
+        <div className="grid grid-cols-12 border border-black mb-1">
           
-          {/* Logo SRK-HV */}
-          <div className="col-span-2 border-r border-black flex items-center justify-center p-2 bg-white">
-            <svg className="w-14 h-14" viewBox="0 0 100 100">
-              <polygon points="50,5 95,50 50,95 5,50" fill="#0c1b40" stroke="#000000" strokeWidth="1.5"/>
-              <text x="50" y="44" fontFamily="sans-serif" fontWeight="950" fontSize="16" fill="#ffffff" textAnchor="middle">SRK</text>
-              <line x1="22" y1="52" x2="78" y2="52" stroke="#ffffff" strokeWidth="2"/>
-              <text x="50" y="73" fontFamily="sans-serif" fontWeight="900" fontSize="15" fill="#ffffff" textAnchor="middle">HV</text>
+          {/* Logo SRK-HV hình thoi màu xanh đậm chuẩn xác */}
+          <div className="col-span-2 border-r border-black flex items-center justify-center p-1 bg-white">
+            <svg className="w-[60px] h-[60px]" viewBox="0 0 120 120">
+              {/* Hình thoi xanh đậm */}
+              <polygon points="60,6 114,60 60,114 6,60" fill="#0c1b40" stroke="#000000" strokeWidth="1.5"/>
+              {/* Dải xanh dương sáng đè lên */}
+              <rect x="2" y="48" width="116" height="24" fill="#0079c1" stroke="#ffffff" strokeWidth="1.2" />
+              {/* Dải trắng viền mảnh */}
+              <line x1="2" y1="50" x2="118" y2="50" stroke="#ffffff" strokeWidth="0.8"/>
+              <line x1="2" y1="70" x2="118" y2="70" stroke="#ffffff" strokeWidth="0.8"/>
+              {/* Chữ SRK-HV */}
+              <text x="60" y="65" fontFamily="Arial, Helvetica, sans-serif" fontWeight="900" fontSize="13.5" fill="#ffffff" letterSpacing="0.5" textAnchor="middle">SRK-HV</text>
             </svg>
           </div>
 
           {/* Tiêu đề chính */}
           <div className="col-span-7 border-r border-black flex flex-col items-center justify-center p-2 text-center">
-            <h1 className="text-base md:text-lg font-black tracking-wide text-black font-sans uppercase">TIÊU CHUẨN KIỂM TRA (IN PUT)</h1>
+            <h1 className="text-lg md:text-xl font-extrabold tracking-wide text-black font-sans uppercase">TIÊU CHUẨN KIỂM TRA (IN PUT)</h1>
           </div>
 
-          {/* Cột quản lý */}
-          <div className="col-span-3 flex flex-col text-[10px] bg-white">
-            <div className="flex border-b border-black">
-              <span className="w-2/5 p-1 border-r border-black font-semibold text-center bg-gray-100">Form</span>
-              <span className="w-3/5 p-1 font-bold text-center">VQC - 002 - 01</span>
+          {/* Cột quản lý ở Header bên phải */}
+          <div className="col-span-3 flex flex-col text-[9px] bg-white relative pt-2">
+            <span className="absolute top-0 right-1 text-[8px] font-bold text-black font-sans leading-none">Form VQC - 002 - 01</span>
+            <div className="flex border border-black border-b-0 border-r-0 border-l-0 mt-1">
+              <span className="w-full p-0.5 pl-1.5 font-bold text-left text-black">Ngày ban hành: 30/01/2018.</span>
             </div>
-            <div className="flex border-b border-black">
-              <span className="w-2/5 p-1 border-r border-black font-semibold text-center bg-gray-100">Ngày ban hành:</span>
-              <span className="w-3/5 p-1 font-mono text-center">30/01/2018</span>
-            </div>
-            <div className="flex">
-              <span className="w-2/5 p-1 border-r border-black font-semibold text-center bg-gray-100">Số quản lý:</span>
-              <span className="w-3/5 p-1 font-mono text-center">VQC - 002 - 001</span>
+            <div className="flex border border-black border-r-0 border-l-0">
+              <span className="w-[45%] p-0.5 pl-1.5 font-bold text-left text-black">Số quản lý:</span>
+              <span className="w-[55%] p-0.5 font-mono font-bold text-right pr-2 text-black">VQC - 002 - 001</span>
             </div>
           </div>
         </div>
 
-        {/* THÔNG TIN LINH KIỆN & KIỂM TRA */}
-        <div className="grid grid-cols-12 border border-black border-b-0 text-[10.5px]">
-          <div className="col-span-2 border-r border-black p-1.5 font-bold bg-gray-50 flex items-center">Mã linh kiện</div>
-          <div className="col-span-2 border-r border-black p-1.5 font-mono font-bold text-center flex items-center justify-center">{program.partCode}</div>
-          
-          <div className="col-span-2 border-r border-black p-1.5 font-bold bg-gray-50 text-center flex items-center justify-center">Đánh giá</div>
-          <div className="col-span-2 border-r border-black p-1 py-0 flex items-center justify-center text-center font-black">
-            {overallStatus === 'OK' && <span className="text-green-700 bg-green-50 border border-green-300 px-2 py-0.5 rounded font-black text-xs">OK</span>}
-            {overallStatus === 'NG' && <span className="text-red-700 bg-red-50 border border-red-300 px-2 py-0.5 rounded font-black text-xs">NG</span>}
-            {overallStatus === 'PENDING' && <span className="text-amber-700 bg-amber-50 border border-amber-300 px-2 py-0.5 rounded font-black text-xs">ĐANG ĐO</span>}
-          </div>
-
-          <div className="col-span-1 border-r border-black p-1.5 font-bold bg-gray-50 text-center flex items-center justify-center">Phê duyệt</div>
-          <div className="col-span-1 border-r border-black p-1.5 text-center flex items-center justify-center font-bold">{run.approver || 'Long'}</div>
-          
-          <div className="col-span-1 border-r border-black p-1.5 font-bold bg-gray-50 text-center flex items-center justify-center">Xác nhận</div>
-          <div className="col-span-1 p-1.5 text-center flex items-center justify-center font-bold">{run.verifier || 'Fukushima'}</div>
-        </div>
-
-        <div className="grid grid-cols-12 border border-black text-[10.5px] border-b-2">
-          <div className="col-span-2 border-r border-black p-1.5 font-bold bg-gray-50 flex items-center">Tên linh kiện</div>
-          <div className="col-span-6 border-r border-black p-1.5 font-bold flex items-center">{program.partName}</div>
-          
-          <div className="col-span-2 border-r border-black p-1.5 font-bold bg-gray-50 flex items-center justify-center text-center">Người kiểm tra</div>
-          <div className="col-span-2 p-1.5 text-center font-bold text-center flex items-center justify-center">{run.inspector}</div>
-        </div>
+        {/* BẢNG THÔNG TIN LINH KIỆN & KIỂM TRA (KHỚP 100% 2 HÀNG x 7 CỘT) */}
+        <table className="w-full border-collapse border border-black text-[9px] mt-1 table-fixed">
+          <tbody>
+            <tr>
+              <td className="border border-black font-bold p-1 bg-gray-100 text-center w-[12%] leading-tight text-black">Mã linh kiện</td>
+              <td className="border border-black font-mono font-black p-1 text-center w-[18%] leading-tight text-[10px] text-black">{program.partCode}</td>
+              <td className="border border-black font-bold p-1 bg-gray-100 text-center w-[11%] leading-tight text-black">Đánh giá</td>
+              <td className="border border-black font-bold p-1 bg-gray-100 text-center w-[11%] leading-tight text-black">Phê duyệt</td>
+              <td className="border border-black font-bold p-1 bg-gray-100 text-center w-[11%] leading-tight text-black">Xác nhận</td>
+              <td className="border border-black font-bold p-1 bg-gray-100 text-center w-[15%] leading-tight text-black">Người kiểm tra</td>
+              <td className="border border-black font-bold p-1 bg-gray-100 text-center w-[22%] leading-tight text-black">Ngày kiểm tra</td>
+            </tr>
+            <tr className="h-7 text-center font-bold text-black text-[8.5px]">
+              <td className="border border-black font-bold p-1 bg-gray-100 leading-tight text-black">Tên linh kiện</td>
+              <td className="border border-black p-1 text-left font-bold text-[8.5px] leading-tight break-words uppercase text-black">{program.partName}</td>
+              {/* Ô đánh giá: Đã đo xong và kết quả */}
+              <td className="border border-black p-1 text-center flex items-center justify-center h-full min-h-[28px]">
+                {overallStatus === 'OK' && <span className="text-green-700 bg-green-50 border border-green-300 px-1.5 py-0.2 rounded font-black text-[9px] tracking-wider leading-none">OK</span>}
+                {overallStatus === 'NG' && <span className="text-red-700 bg-red-50 border border-red-300 px-1.5 py-0.2 rounded font-black text-[9px] tracking-wider leading-none">NG</span>}
+                {overallStatus === 'PENDING' && <span className="text-amber-700 bg-amber-50 border border-amber-300 px-1 py-0.2 rounded font-black text-[8px] leading-none block">ĐANG ĐO</span>}
+              </td>
+              {/* Ô phê duyệt */}
+              <td className="border border-black p-1 font-bold text-slate-900 text-[9px]">{run.approver || ''}</td>
+              {/* Ô xác nhận */}
+              <td className="border border-black p-1 font-bold text-slate-900 text-[9px]">{run.verifier || ''}</td>
+              {/* Ô người kiểm tra */}
+              <td className="border border-black p-1 font-bold text-slate-900 text-[9px]">{run.inspector}</td>
+              {/* Ô ngày kiểm tra */}
+              <td className="border border-black p-1 font-mono font-bold text-slate-900 text-[9px]">{run.checkDate.split('-').reverse().join('.')}</td>
+            </tr>
+          </tbody>
+        </table>
 
         {/* SƠ ĐỒ VỊ TRÍ ĐO */}
         <div className="border border-black border-t-0 p-3 bg-white flex flex-col items-center justify-center relative min-h-[160px] max-h-[220px] overflow-hidden">
-          <span className="absolute top-2 left-3 text-[10px] font-extrabold text-gray-700 uppercase tracking-widest bg-gray-100 border border-gray-300 px-2 py-0.5 rounded">* Sơ đồ vị trí đo:</span>
+          <span className="absolute top-2 left-3 text-[9px] font-extrabold text-gray-700 uppercase tracking-widest bg-gray-100 border border-gray-300 px-2 py-0.5 rounded">* Sơ đồ vị trí đo:</span>
           
           <div className="relative mt-4">
             <img 
@@ -135,39 +145,45 @@ export default function ReportView({ program, run, onBack }: ReportViewProps) {
             ))}
           </div>
 
-          <div className="absolute bottom-2 right-3 text-[8.5px] text-gray-500 font-mono flex flex-col text-right">
-            <span>Vị trí ※ không có đường parting line (2 vị trí)</span>
-            <span>Bậc của parting line tại vị trí ☆: Max 0.05mm</span>
+          <div className="absolute bottom-1.5 right-3 text-[8px] text-black font-bold flex flex-col text-right leading-tight">
+            <span>Vị trí ※ không có đường parting line (2 vị trí)  ①</span>
+            <span>Bậc của parting line tại vị trí ☆ Max : 0.05mm  ⑮</span>
           </div>
         </div>
 
         {/* BẢNG KÍCH THƯỚC ĐO LƯỜNG ĐÚNG CHUẨN */}
-        <table className="w-full border-collapse border border-black text-[9.5px] mt-2 table-fixed">
+        <table className="w-full border-collapse border border-black text-[9px] mt-1 table-fixed text-black">
           <thead>
             <tr className="bg-gray-100 text-center font-bold">
-              <th className="border border-black w-[4%] p-1 leading-tight">Điểm Q.Trọng</th>
-              <th className="border border-black w-[4%] p-1">STT</th>
-              <th className="border border-black w-[15%] p-1 text-left">Hạng mục kiểm tra</th>
-              <th className="border border-black w-[18%] p-1 text-left">Tiêu chuẩn kỹ thuật</th>
-              <th className="border border-black w-[9%] p-1 flex-col">
-                <div className="border-b border-black py-0.5 leading-none">Dung sai</div>
-                <div className="flex text-[8px]">
+              <th className="border border-black w-[5%] p-1 leading-tight text-black">Điểm quan trọng</th>
+              <th className="border border-black w-[4%] p-1 text-black">STT</th>
+              <th className="border border-black w-[15%] p-1 text-left text-black">Hạng mục kiểm tra</th>
+              <th className="border border-black w-[18%] p-1 text-left text-black">Tiêu chuẩn kỹ thuật</th>
+              <th className="border border-black w-[10%] p-0 text-black">
+                <div className="border-b border-black py-0.5 leading-none">Điểm quan trọng</div>
+                <div className="flex text-[7.5px]">
                   <span className="w-1/2 border-r border-black py-0.5">Min</span>
                   <span className="w-1/2 py-0.5">Max</span>
                 </div>
               </th>
-              <th className="border border-black w-[10%] p-1">Dụng cụ kiểm</th>
-              <th className="border border-black w-[10%] p-1">Tần suất xác nhận</th>
-              <th className="border border-black w-[22%] p-0">
-                <div className="border-b border-black py-0.5 leading-none text-[8.5px]">Cavity / Mẫu</div>
-                <div className="flex text-[8.5px]">
+              <th className="border border-black w-[10%] p-1 text-black">Dụng cụ kiểm tra</th>
+              <th className="border border-black w-[10%] p-1 text-black">Tần suất xác nhận</th>
+              <th className="border border-black w-[20%] p-0 text-black">
+                <div className="border-b border-black py-0.5 leading-none text-[8px]">Cavity / Mẫu</div>
+                <div className="flex text-[8px]">
                   <span className="w-1/4 border-r border-black py-0.5">1</span>
                   <span className="w-1/4 border-r border-black py-0.5">2</span>
                   <span className="w-1/4 border-r border-black py-0.5">3</span>
                   <span className="w-1/4 py-0.5">4</span>
                 </div>
               </th>
-              <th className="border border-black w-[8%] p-1">Kết quả</th>
+              <th className="border border-black w-[8%] p-0 text-black">
+                <div className="border-b border-black py-0.5 leading-none">Kết quả</div>
+                <div className="flex text-[7.5px]">
+                  <span className="w-1/2 border-r border-black py-0.5">OK</span>
+                  <span className="w-1/2 py-0.5">NG</span>
+                </div>
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -175,31 +191,44 @@ export default function ReportView({ program, run, onBack }: ReportViewProps) {
               const res = run.results[item.id];
               const summaryStatus = evalSummary(res, item);
 
+              // Helper hiển thị STT khoanh tròn Unicode
+              const renderSTT = (id: number) => {
+                const circles = ["", "①", "②", "③", "④", "⑤", "⑥", "⑦", "⑧", "⑨", "⑩", "⑪", "⑫", "⑬", "⑭", "⑮", "⑯", "⑰", "⑱", "⑲", "⑳"];
+                if (id >= 1 && id <= 20) {
+                  return <span className="text-[12px] font-black text-black">{circles[id]}</span>;
+                }
+                return (
+                  <span className="w-4 h-4 rounded-full border border-black flex items-center justify-center font-bold text-[8px] mx-auto bg-white text-black">
+                    {id}
+                  </span>
+                );
+              };
+
               return (
                 <tr key={item.id} className="text-center hover:bg-gray-50/50">
-                  {/* Cột 1: Ký hiệu S đỏ hoặc S trong tam giác */}
+                  {/* Cột 1: Ký hiệu S đỏ trong tam giác ngược */}
                   <td className="border border-black p-0.5 font-bold">
                     {item.isCritical && (
                       <div className="flex justify-center items-center">
-                        <svg className="w-4 h-4 text-red-600" viewBox="0 0 24 24" fill="currentColor">
-                          <polygon points="12,2 22,20 2,20" fill="none" stroke="currentColor" strokeWidth="2.5"/>
-                          <text x="12" y="17.5" fontSize="10" fontFamily="sans-serif" fontWeight="950" fill="currentColor" textAnchor="middle">S</text>
+                        <svg className="w-4.5 h-4.5 text-red-600" viewBox="0 0 24 24" fill="currentColor">
+                          <polygon points="12,22 22,5 2,5" fill="none" stroke="currentColor" strokeWidth="2.5"/>
+                          <text x="12" y="16" fontSize="10.5" fontFamily="sans-serif" fontWeight="950" fill="currentColor" textAnchor="middle">S</text>
                         </svg>
                       </div>
                     )}
                   </td>
                   
                   {/* Cột 2: STT */}
-                  <td className="border border-black p-1 font-mono font-bold bg-gray-50">{item.id}</td>
+                  <td className="border border-black p-0.5 font-bold bg-gray-50">{renderSTT(item.id)}</td>
                   
                   {/* Cột 3: Hạng mục */}
                   <td className="border border-black p-1 text-left font-semibold leading-tight">{item.name}</td>
                   
                   {/* Cột 4: Tiêu chuẩn */}
-                  <td className="border border-black p-1 text-left font-medium leading-tight">{item.standard}</td>
+                  <td className="border border-black p-1 text-left font-medium leading-tight text-gray-700">{item.standard}</td>
                   
                   {/* Cột 5: Min / Max */}
-                  <td className="border border-black p-0 text-[8.5px] font-mono leading-none">
+                  <td className="border border-black p-0 text-[8px] font-mono leading-none">
                     {item.isNumerical ? (
                       <div className="flex h-full items-stretch">
                         <span className="w-1/2 border-r border-slate-300 py-1 flex items-center justify-center bg-gray-50/40">
@@ -215,50 +244,44 @@ export default function ReportView({ program, run, onBack }: ReportViewProps) {
                   </td>
                   
                   {/* Cột 6: Dụng cụ */}
-                  <td className="border border-black p-1 font-medium">{item.tool}</td>
+                  <td className="border border-black p-1 font-semibold">{item.tool}</td>
                   
                   {/* Cột 7: Tần suất */}
-                  <td className="border border-black p-1 font-mono text-[8.5px] font-medium text-gray-600">{item.frequency}</td>
+                  <td className="border border-black p-1 font-mono text-[8px] font-semibold text-gray-600">{item.frequency}</td>
                   
                   {/* Cột 8: Nhập kết quả đo 4 Cavity */}
-                  <td className="border border-black p-0 font-mono text-[9px] h-full">
+                  <td className="border border-black p-0 font-mono text-[8.5px] h-full">
                     {item.isNumerical ? (
                       <div className="flex h-full items-stretch">
-                        <span className={`w-1/4 border-r border-slate-300 py-1 flex items-center justify-center ${res?.sample1 && evalSample(res.sample1, item) !== 'OK' ? 'font-bold bg-amber-50 text-amber-900 border border-amber-300' : ''}`}>
+                        <span className={`w-1/4 border-r border-slate-300 py-1 flex items-center justify-center ${res?.sample1 && evalSample(res.sample1, item) !== 'OK' ? 'font-bold bg-rose-50 text-rose-950 border border-rose-200' : ''}`}>
                           {res?.sample1 || ''}
                         </span>
-                        <span className={`w-1/4 border-r border-slate-300 py-1 flex items-center justify-center ${res?.sample2 && evalSample(res.sample2, item) !== 'OK' ? 'font-bold bg-amber-50 text-amber-900 border border-amber-300' : ''}`}>
+                        <span className={`w-1/4 border-r border-slate-300 py-1 flex items-center justify-center ${res?.sample2 && evalSample(res.sample2, item) !== 'OK' ? 'font-bold bg-rose-50 text-rose-950 border border-rose-200' : ''}`}>
                           {res?.sample2 || ''}
                         </span>
-                        <span className={`w-1/4 border-r border-slate-300 py-1 flex items-center justify-center ${res?.sample3 && evalSample(res.sample3, item) !== 'OK' ? 'font-bold bg-amber-50 text-amber-900 border border-amber-300' : ''}`}>
+                        <span className={`w-1/4 border-r border-slate-300 py-1 flex items-center justify-center ${res?.sample3 && evalSample(res.sample3, item) !== 'OK' ? 'font-bold bg-rose-50 text-rose-950 border border-rose-200' : ''}`}>
                           {res?.sample3 || ''}
                         </span>
-                        <span className={`w-1/4 py-1 flex items-center justify-center ${res?.sample4 && evalSample(res.sample4, item) !== 'OK' ? 'font-bold bg-amber-50 text-amber-900 border border-amber-300' : ''}`}>
+                        <span className={`w-1/4 py-1 flex items-center justify-center ${res?.sample4 && evalSample(res.sample4, item) !== 'OK' ? 'font-bold bg-rose-50 text-rose-950 border border-rose-200' : ''}`}>
                           {res?.sample4 || ''}
                         </span>
                       </div>
                     ) : (
-                      <div className="p-1 text-left text-[8.5px] leading-tight break-words font-sans text-gray-700 font-medium">
+                      <div className="p-1 text-left text-[8px] leading-tight break-words font-sans text-gray-700 font-bold">
                         {res?.sample1 || ''}
                       </div>
                     )}
                   </td>
                   
-                  {/* Cột 9: Đánh giá mốc */}
-                  <td className="border border-black p-0.5 font-bold h-full">
-                    <div className="flex items-center justify-center h-full">
-                      {summaryStatus === 'OK' && (
-                        <span className="text-emerald-800 bg-emerald-100/60 border border-emerald-300 px-1 py-0.2 rounded text-[8px] badge-print-ok uppercase">ok</span>
-                      )}
-                      {(summaryStatus === 'Cận Min' || summaryStatus === 'Cận Max') && (
-                        <span className="text-amber-800 bg-amber-100/60 border border-amber-300 px-1 py-0.2 rounded text-[7.5px] badge-print-warning uppercase leading-tight font-black">cận biên</span>
-                      )}
-                      {summaryStatus === 'NG' && (
-                        <span className="text-rose-800 bg-rose-100 border border-rose-300 px-1 py-0.2 rounded text-[8px] badge-print-ng uppercase font-black">ng</span>
-                      )}
-                      {summaryStatus === 'CHƯA ĐO' && (
-                        <span className="text-gray-400 text-[7px] italic block font-normal">-</span>
-                      )}
+                  {/* Cột 9: Đánh giá mốc (Chia OK/NG tự động điền ✓) */}
+                  <td className="border border-black p-0 text-[10px] font-black h-full">
+                    <div className="flex h-full items-stretch min-h-[22px]">
+                      <span className="w-1/2 border-r border-black flex items-center justify-center font-bold">
+                        {summaryStatus === 'OK' && <span className="text-black font-black text-xs">✓</span>}
+                      </span>
+                      <span className="w-1/2 flex items-center justify-center font-bold text-red-600 bg-red-50/20">
+                        {summaryStatus === 'NG' && <span className="text-red-600 font-black text-xs">✓</span>}
+                      </span>
                     </div>
                   </td>
                 </tr>
@@ -268,84 +291,98 @@ export default function ReportView({ program, run, onBack }: ReportViewProps) {
         </table>
 
         {/* DÒNG CHÚ Ý THEO BIỂU MẪU */}
-        <p className="font-sans italic text-[8.5px] font-bold text-gray-800 mt-2 block tracking-wide">
+        <p className="font-sans italic text-[8.5px] font-bold text-black mt-1 block tracking-wide">
           * Chú ý: Khi kiểm tra phát sinh 1 pcs NG bộ phận QC có thể yêu cầu trả lại toàn bộ Lot đó cho NCC.
         </p>
 
-        {/* KHU VỰC KHÁC: TỔNG SỐ LƯỢNG NHẬP, LỊCH SỬ SỬA ĐỔI */}
-        <div className="grid grid-cols-12 border border-black mt-2 text-[8.5px] table-fixed">
+        {/* KHU VỰC CHÂN TRANG: TỔNG SỐ LƯỢNG NHẬP, LỊCH SỬ SỬA ĐỔI */}
+        <div className="grid grid-cols-12 border border-black mt-1 text-[8.5px] table-fixed">
           
-          {/* Cột bên trái: Nội dung kiểm tra và tổng số lượng nhập */}
-          <div className="col-span-4 border-r border-black flex flex-col">
+          {/* Cột bên trái: Thông tin kiểm tra */}
+          <div className="col-span-4 border-r border-black flex flex-col justify-between text-black">
             <div className="border-b border-black bg-gray-50 p-1 flex justify-between items-center font-bold">
               <span>Nội dung kiểm tra:</span>
-              <span className="font-normal font-sans italic">Kiểm tra linh kiện đầu vào</span>
+              <span className="font-normal font-sans italic text-[8px]">Kiểm tra linh kiện đầu vào</span>
             </div>
             <div className="flex-1 p-2 bg-white flex flex-col justify-center">
-              <div className="flex items-center justify-between font-bold mb-1.5 border-b border-dashed border-gray-300 pb-1">
+              <div className="flex items-center justify-between font-bold mb-1 pb-1 border-b border-dashed border-gray-200">
                 <span>Tổng số lượng nhập:</span>
-                <span className="font-mono text-xs text-blue-700 bg-blue-50 px-2 py-0.5 rounded border border-blue-200 font-black">{run.importQty || '14000'}</span>
+                <span className="font-mono text-[10px] text-black font-black">{run.importQty || ''}</span>
               </div>
               <div className="flex items-center justify-between font-bold">
                 <span>Số lô / lot kiểm tra:</span>
-                <span className="font-mono text-xs text-slate-800 bg-slate-50 px-2 py-0.5 rounded border border-slate-200 font-bold">{run.lotNo || 'LOT-2026A'}</span>
+                <span className="font-mono text-[10px] text-black font-black">{run.lotNo || ''}</span>
               </div>
             </div>
             
-            <div className="border-t border-black p-1.5 flex items-center justify-center gap-1.5 bg-gray-50/50">
+            <div className="border-t border-black p-1 flex items-center justify-center gap-2 bg-gray-50/50">
               <span className="font-bold">Điểm quan trọng:</span>
-              <div className="flex items-center gap-0.5">
-                <svg className="w-4 h-4 text-red-600" viewBox="0 0 24 24" fill="currentColor">
-                  <polygon points="12,2 22,20 2,20" fill="none" stroke="currentColor" strokeWidth="2.5"/>
-                  <text x="12" y="17.5" fontSize="10" fontFamily="sans-serif" fontWeight="950" fill="currentColor" textAnchor="middle">S</text>
+              <div className="flex items-center">
+                <svg className="w-4.5 h-4.5 text-red-600" viewBox="0 0 24 24" fill="currentColor">
+                  <polygon points="12,22 22,5 2,5" fill="none" stroke="currentColor" strokeWidth="2.5"/>
+                  <text x="12" y="16" fontSize="10.5" fontFamily="sans-serif" fontWeight="950" fill="currentColor" textAnchor="middle">S</text>
                 </svg>
               </div>
             </div>
           </div>
 
-          {/* Cột giữa: Lịch sử sửa đổi của bản vẽ */}
-          <div className="col-span-8 flex flex-col">
-            <div className="grid grid-cols-12 bg-gray-50 border-b border-black text-center font-bold py-1">
-              <span className="col-span-2 border-r border-slate-300">Lần sửa đổi</span>
-              <span className="col-span-3 border-r border-slate-300">Ngày</span>
-              <span className="col-span-4 border-r border-slate-300">Nội dung</span>
-              <span className="col-span-1.5 border-r border-slate-300 col-span-2">Duyệt</span>
-              <span className="col-span-1.5 col-span-1">Lập</span>
+          {/* Cột giữa & phải: Lịch lý sửa đổi (Khớp 100% form chuẩn của người dùng) */}
+          <div className="col-span-8 flex text-black">
+            {/* Cột xoay dọc màu xám: Lý lịch sửa đổi */}
+            <div className="w-[6%] bg-gray-100 border-r border-black flex items-center justify-center text-center font-bold p-1 text-[8px] leading-tight vertical-text">
+              Lý lịch sửa đổi
             </div>
             
-            <div className="flex-1 flex flex-col justify-between">
-              {/* Lấy tối đa 5 sửa đổi lấp đầy bảng */}
-              {Array.from({ length: 5 }).map((_, index) => {
-                const rev = program.revisions[index];
-                return (
-                  <div key={index} className="grid grid-cols-12 text-center py-1 border-b border-[#ddd] last:border-0 font-medium font-sans">
-                    <span className="col-span-2 border-r border-[#ddd] font-mono font-bold text-gray-500">
-                      {rev ? rev.rev : ''}
-                    </span>
-                    <span className="col-span-3 border-r border-[#ddd] font-mono text-gray-600">
-                      {rev ? rev.date : ''}
-                    </span>
-                    <span className="col-span-4 border-r border-[#ddd] text-left px-1.5 leading-tight text-gray-700 truncate font-semibold">
-                      {rev ? rev.content : ''}
-                    </span>
-                    <span className="col-span-1.5 border-r border-[#ddd] col-span-2 truncate font-semibold">
-                      {rev ? rev.approver : ''}
-                    </span>
-                    <span className="col-span-1.5 col-span-1 truncate font-semibold text-gray-600">
-                      {rev ? rev.creator : ''}
-                    </span>
-                  </div>
-                );
-              })}
+            {/* Bảng danh sách sửa đổi */}
+            <div className="w-[94%] flex flex-col">
+              {/* Tiêu đề bảng sửa đổi */}
+              <div className="grid grid-cols-12 bg-gray-50 border-b border-black text-center font-bold py-0.5 text-[7.5px] leading-none">
+                <span className="col-span-2 border-r border-black py-0.5">Lần sửa đổi</span>
+                <span className="col-span-2 border-r border-black py-0.5">Ngày</span>
+                <span className="col-span-5 border-r border-black py-0.5">Nội dung</span>
+                <span className="col-span-2 border-r border-black py-0.5">Duyệt</span>
+                <span className="col-span-1 py-0.5">Lập</span>
+              </div>
+              
+              {/* 5 Hàng sửa đổi cố định từ 4 xuống 00 */}
+              <div className="flex-1 flex flex-col">
+                {(() => {
+                  const revKeys = ['4', '3', '2', '1', '00'];
+                  return revKeys.map((key) => {
+                    const rev = program.revisions.find(r => r.rev === key || r.rev === '0' + key || (key === '00' && (r.rev === '00' || r.rev === '0')));
+                    return (
+                      <div key={key} className="grid grid-cols-12 text-center text-[7.5px] leading-tight border-b border-black last:border-0 h-5 items-center font-sans font-medium">
+                        <span className="col-span-2 border-r border-black h-full flex items-center justify-center font-bold font-mono">
+                          {key}
+                        </span>
+                        <span className="col-span-2 border-r border-black h-full flex items-center justify-center font-mono">
+                          {rev ? rev.date.split('-').reverse().join('.') : ''}
+                        </span>
+                        <span className="col-span-5 border-r border-black h-full flex items-center justify-start text-left px-1 truncate font-semibold">
+                          {rev ? rev.content : ''}
+                        </span>
+                        <span className="col-span-2 border-r border-black h-full flex items-center justify-center truncate font-bold">
+                          {rev ? rev.approver : ''}
+                        </span>
+                        <span className="col-span-1 h-full flex items-center justify-center truncate font-bold text-gray-700">
+                          {rev ? rev.creator : ''}
+                        </span>
+                      </div>
+                    );
+                  });
+                })()}
+              </div>
             </div>
           </div>
         </div>
 
         {/* CHÂN TRANG BIỂU MẪU */}
-        <div className="flex justify-between items-center text-[8.5px] mt-4 font-mono text-gray-400 font-medium">
+        <div className="flex justify-between items-center text-[8px] mt-2 font-mono text-gray-500 font-bold">
           <span>Ngày in: {new Date().toLocaleDateString('vi-VN')}</span>
-          <span className="font-sans italic font-bold">Thời gian lưu trữ 20 năm từ khi kết thúc đời xe.</span>
+          <span className="font-sans italic">Thời gian lưu trữ 20 năm từ khi kết thúc đời xe.</span>
         </div>
+
+      </div>
 
       </div>
     </div>
